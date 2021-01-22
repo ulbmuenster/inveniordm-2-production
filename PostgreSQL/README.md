@@ -32,6 +32,36 @@ kubectl create secret generic db-secrets
 
 **TODO:** Replication
 
+## Persistence
+
+In order to not loose any data when PostgreSQL is restarted, there should be a volume defined to hold it. This is 
+done by defining a `PersitentVolumeClaim` in a yml file `db-claim.yml`:
+
+```yaml
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: db-claim
+spec:
+  storageClassName: cindergold-delete
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 5Gi
+```
+
+Then set in `values.yaml`
+```yaml
+persistence:
+  enabled: true
+  existingClaim: db-claim
+```
+and call
+```shell
+kubectl apply -f db-claim.yml -n invenio
+```
+
 ## Installation
 
 Now with everything prepared we may install PostgreSQL by
