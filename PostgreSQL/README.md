@@ -42,6 +42,8 @@ apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
   name: db-claim
+  annotations:
+    "helm.sh/resource-policy": keep
 spec:
   storageClassName: cindergold-delete
   accessModes:
@@ -50,6 +52,7 @@ spec:
     requests:
       storage: 5Gi
 ```
+**TODO:** finalize the storage size
 
 Then set in `values.yaml`
 ```yaml
