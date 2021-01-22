@@ -28,6 +28,7 @@ kubectl create secret generic db-secrets
   --from-literal="postgresql-password=$POSTGRESQL_PASSWORD"
   --from-literal="POSTGRESQL_PASSWORD=$POSTGRESQL_PASSWORD"
   --from-literal="SQLALCHEMY_DB_URI=postgresql+psycopg2://$POSTGRESQL_USER:$POSTGRESQL_PASSWORD@$POSTGRESQL_HOST:$POSTGRESQL_PORT/$POSTGRESQL_DATABASE"
+  -n invenio
 ```
 
 **TODO:** Replication
@@ -70,6 +71,6 @@ kubectl apply -f db-claim.yml -n invenio
 Now with everything prepared we may install PostgreSQL by
 
 ```shell
-helm repo add bitnami https://charts.helm.sh/stable
+helm repo add bitnami https://charts.bitnami.com/bitnami
 helm install postgresql -f ./PostgreSQL/values.yaml bitnami/postgresql -n invenio
 ```
