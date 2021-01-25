@@ -1,7 +1,7 @@
 # Installation and Configuration of PostgreSQL
 
 The PostgreSQL installation sets up on the Bitnami helm chart, available on 
-`https://charts.bitnami.com/charts`. It's configuration is available in the locally available file
+`https://charts.bitnami.com/bitnami`. It's configuration is available in the locally available file
 `values.yaml`.
 
 ## Setting the database, user and password
