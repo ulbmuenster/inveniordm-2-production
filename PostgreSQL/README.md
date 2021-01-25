@@ -32,6 +32,7 @@ kubectl create secret generic db-secrets
 ```
 
 **TODO:** Replication
+**TODO:** Backup
 
 ## Persistence
 
