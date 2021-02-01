@@ -32,7 +32,11 @@ kubectl create secret generic db-secrets
 ```
 
 **TODO:** Replication
-**TODO:** Backup
+
+## Backup
+
+Backup in PostgreSQL is done with the command `pg_dump`. But this doesn't allow incremental backup.
+**TODO:** specify this further
 
 ## Persistence
 
