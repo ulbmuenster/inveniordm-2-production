@@ -33,29 +33,9 @@ $ kubectl create secret generic db-secrets
   -n invenio
 ```
 
-## Replication
-
-Having the replication password allready set in `db-secrets` we define the replica specification in `values.yml`
-as follows:
-```yaml
-replication:
-  enabled: true
-  user: invenio_repl
-  password: repl_password
-  readReplicas: 2
-  synchronousCommit: 'on'
-  numSynchronousReplicas: 2
-  applicationName: invenio_rdm
-```
-## Backup
-
-One possibility in PostgreSQL to backup the data is using the command `pg_dump`, but this doesn't allow 
-incremental backup. To implement continuous-archiving it is possible to archive the write-ahead log (WAL).
-**TODO:** specify this further
-
 ## Persistence
 
-In order to not loose any data when PostgreSQL is restarted, there should be a volume defined to hold it. This is 
+In order to not loose any data when PostgreSQL is restarted, there should be a volume defined to hold it. This is
 done by defining a `PersitentVolumeClaim` in a yml file `db-claim.yml`:
 
 ```yaml
@@ -85,6 +65,36 @@ and call
 ```shell
 kubectl apply -f db-claim.yml -n invenio
 ```
+
+## Replication
+
+Having the replication password allready set in `db-secrets` we define the replica specification in `values.yml`
+as follows:
+```yaml
+replication:
+  enabled: true
+  user: invenio_repl
+  password: repl_password
+  readReplicas: 2
+  synchronousCommit: 'on'
+  numSynchronousReplicas: 2
+  applicationName: invenio_rdm
+```
+
+The password was already set as part of `db-secrets`. The number of replicas is set to `2` and they are 
+configured as synchronous replicas, so every transaction waits until the logs are commited on the replicas.
+
+A caveat is that there is no possibility to define PersitentVolume's to hold the data of the read replicas.
+
+**Attention**: Everything defined here is executed at database initialization time. If you first try without 
+replication this will not work, as there is no user `invenio_repl` defined in the database! You'll first have to remove
+the PersistentVolumeClaim `db-claim`, so everything is reinitialized.
+
+## Backup
+
+One possibility in PostgreSQL to backup the data is using the command `pg_dump`, but this doesn't allow 
+incremental backup. To implement continuous-archiving it is possible to archive the write-ahead log (WAL).
+**TODO:** specify this further
 
 ## Installation
 
