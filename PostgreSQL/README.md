@@ -17,25 +17,40 @@ in `values.yaml`. Now me just might to generate the secret `db-secrets`, but we 
 which is later needed to configure InvenioRDM (the content of `POSTGRESQL_HOST` is defined as the name of the 
 Kubernetes service):
 ```shell
-POSTGRESQL_POSTGRES_PASSWORD=$(openssl rand -hex 8)
-POSTGRESQL_PASSWORD=$(openssl rand -hex 8)
-POSTGRESQL_USER=invenio
-POSTGRESQL_HOST=postgresql
-POSTGRESQL_PORT=5432
-POSTGRESQL_DATABASE=invenio
-kubectl create secret generic db-secrets  
+$ POSTGRESQL_POSTGRES_PASSWORD=$(openssl rand -hex 8)
+$ POSTGRESQL_PASSWORD=$(openssl rand -hex 8)
+$ POSTGRESQL_USER=invenio
+$ POSTGRESQL_HOST=postgresql
+$ POSTGRESQL_PORT=5432
+$ POSTGRESQL_DATABASE=invenio
+$ POSTGRESQL_REPLICATION_PASSWORD=$(openssl rand -hex 8)
+$ kubectl create secret generic db-secrets  
   --from-literal="postgresql-postgres-password=$POSTGRESQL_POSTGRES_PASSWORD"
   --from-literal="postgresql-password=$POSTGRESQL_PASSWORD"
+  --from-literal="postgresql-replication-password=$POSTGRESQL_REPLICATION_PASSWORD"
   --from-literal="POSTGRESQL_PASSWORD=$POSTGRESQL_PASSWORD"
   --from-literal="SQLALCHEMY_DB_URI=postgresql+psycopg2://$POSTGRESQL_USER:$POSTGRESQL_PASSWORD@$POSTGRESQL_HOST:$POSTGRESQL_PORT/$POSTGRESQL_DATABASE"
   -n invenio
 ```
 
-**TODO:** Replication
+## Replication
 
+Having the replication password allready set in `db-secrets` we define the replica specification in `values.yml`
+as follows:
+```yaml
+replication:
+  enabled: true
+  user: invenio_repl
+  password: repl_password
+  readReplicas: 2
+  synchronousCommit: 'on'
+  numSynchronousReplicas: 2
+  applicationName: invenio_rdm
+```
 ## Backup
 
-Backup in PostgreSQL is done with the command `pg_dump`. But this doesn't allow incremental backup.
+One possibility in PostgreSQL to backup the data is using the command `pg_dump`, but this doesn't allow 
+incremental backup. To implement continuous-archiving it is possible to archive the write-ahead log (WAL).
 **TODO:** specify this further
 
 ## Persistence

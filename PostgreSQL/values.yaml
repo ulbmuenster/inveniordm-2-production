@@ -116,19 +116,19 @@ rbac:
   create: false
 
 replication:
-  enabled: false
-  user: repl_user
+  enabled: true
+  user: invenio_repl
   password: repl_password
-  readReplicas: 1
+  readReplicas: 2
   ## Set synchronous commit mode: on, off, remote_apply, remote_write and local
   ## ref: https://www.postgresql.org/docs/9.6/runtime-config-wal.html#GUC-WAL-LEVEL
-  synchronousCommit: 'off'
+  synchronousCommit: 'on'
   ## From the number of `readReplicas` defined above, set the number of those that will have synchronous replication
   ## NOTE: It cannot be > readReplicas
-  numSynchronousReplicas: 0
+  numSynchronousReplicas: 2
   ## Replication Cluster application name. Useful for defining multiple replication policies
   ##
-  applicationName: my_application
+  applicationName: invenio_rdm
 
 ## PostgreSQL admin password (used when `postgresqlUsername` is not `postgres`)
 ## ref: https://github.com/bitnami/bitnami-docker-postgresql/blob/master/README.md#creating-a-database-user-on-first-run (see note!)
