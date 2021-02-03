@@ -101,6 +101,10 @@ we make sure that the transaction logs will be copied every 60 seconds. So in `v
 postgresqlExtendedConf: { "archiveMode": "on", "archiveTimeout": "60", "archiveCommand": "\'test ! -f /mnt/archive/%f && cp %p /mnt/archive/%f\'" }
 ```
 
+**TODO:** document extra Volume mount
+
+**TODO:** how is regular base backup done?
+
 **TODO:** document a restore command?!
 
 **TODO:** describe how the directory is created 
