@@ -95,12 +95,15 @@ the PersistentVolumeClaim `db-claim`, so everything is reinitialized.
 One possibility in PostgreSQL to backup the data is using the command `pg_dump`, but this doesn't allow 
 incremental backup. To implement continuous-archiving it is possible to archive the write-ahead log (WAL).
 As replication is already activated (so streaming of the logs is active) we only have to set `archive_mode=on`
-and define an archive command that does the trick. So in `values.yaml` we add:
+and define an archive command that does the trick. Commits might also be rare, so by adding `archiveTimeout: 60` 
+we make sure that the transaction logs will be copied every 60 seconds. So in `values.yaml` we add:
 ```yaml
-postgresqlExtendedConf: { "archiveMode": "on", "archiveCommand": "\'/bin/true\'" }
+postgresqlExtendedConf: { "archiveMode": "on", "archiveTimeout": "60", "archiveCommand": "\'test ! -f /mnt/archive/%f && cp %p /mnt/archive/%f\'" }
 ```
 
-**TODO:** define a useful archive command and perhaps a restore command?!
+**TODO:** document a restore command?!
+
+**TODO:** describe how the directory is created 
 
 ## Installation
 
