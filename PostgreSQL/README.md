@@ -101,7 +101,39 @@ we make sure that the transaction logs will be copied every 60 seconds. So in `v
 postgresqlExtendedConf: { "archiveMode": "on", "archiveTimeout": "60", "archiveCommand": "\'test ! -f /mnt/archive/%f && cp %p /mnt/archive/%f\'" }
 ```
 
-**TODO:** document extra Volume mount
+Transaction logs are persisted to an extra volume defined in `archive-claim.yml`:
+```yaml
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: archive-claim
+  annotations:
+    "helm.sh/resource-policy": keep
+spec:
+  storageClassName: cindergold-delete
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 5Gi
+```
+
+This is created by calling
+```shell
+kubectl apply -f archive-claim.yml -n invenio
+```
+
+In `values.yaml` must the following section be included:
+```yaml
+primary:
+  extraVolumeMounts:
+    - name: archive
+      mountPath: /mnt/archive
+  extraVolumes:
+    - name: archive
+      persistentVolumeClaim:
+        claimName: archive-claim
+```
 
 **TODO:** how is regular base backup done?
 
