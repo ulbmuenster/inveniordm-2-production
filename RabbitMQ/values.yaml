@@ -124,7 +124,7 @@ memoryHighWatermark:
 
 ## Plugins to enable
 ##
-plugins: 'rabbitmq_management rabbitmq_peer_discovery_k8s'
+plugins: 'rabbitmq_management rabbitmq_peer_discovery_k8s rabbitmq_amqp1_0'
 
 ## Community plugins to download during container initialization.
 ## Combine it with extraPlugins to also enable them.
@@ -540,7 +540,8 @@ persistence:
   ##   set, choosing the default provisioner.  (gp2 on AWS, standard on
   ##   GKE, AWS & OpenStack)
   ##
-  # storageClass: "-"
+  storageClass: cindergold-delete
+
   ## selector can be used to match an existing PersistentVolume
   ## selector:
   ##   matchLabels:
