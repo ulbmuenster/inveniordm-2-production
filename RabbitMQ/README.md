@@ -1,12 +1,33 @@
 # Installation and Configuration of RabbitMQ
 
+## Setting the user and password
+
+InvenioRDM is configured with the user `guest` and comes along with a secret `mq-secrets` 
+containing the needed information to configure RabbitMQ and InvenioRDM accordingly:
+
+```shell
+$ RABBITMQ_DEFAULT_PASS=$(openssl rand -hex 8)
+$ kubectl create secret generic \
+  --from-literal="RABBITMQ_DEFAULT_PASS=$RABBITMQ_DEFAULT_PASS" \
+  --from-literal="rabbitmq-password=$RABBITMQ_DEFAULT_PASS" \
+  --from-literal="CELERY_BROKER_URL=amqp://guest:$RABBITMQ_DEFAULT_PASS@mq:5672/" \
+  mq-secrets --namespace invenio
+secret "mq-secrets" created
+```
+
+In `values.yaml` the following entries must be changed/set:
+```yaml
+auth:
+  username: guest
+  existingPasswordSecret: mq-secrets
+```
+
+The helm chart then takes the RabbitMQ from the key `rabbitmq-password`.
+
 ## Plugins
 
-To support AMQP 1.0 we add the appropriate PlugIn by adding it's name in `values.yaml`:
-
-```yaml
-plugins: 'rabbitmq_management rabbitmq_peer_discovery_k8s rabbitmq_amqp1_0'
-```
+As the Bitnami RabbitMQ image comes already with RabbitMQ management enabled, there is nothing
+to add.
 
 ## Persistence
 

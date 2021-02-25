@@ -61,13 +61,13 @@ auth:
   ## RabbitMQ application username
   ## ref: https://github.com/bitnami/bitnami-docker-rabbitmq#environment-variables
   ##
-  username: user
+  username: guest
 
   ## RabbitMQ application password
   ## ref: https://github.com/bitnami/bitnami-docker-rabbitmq#environment-variables
   ##
   # password:
-  # existingPasswordSecret: name-of-existing-secret
+  existingPasswordSecret: mq-secrets
 
   ## Erlang cookie to determine whether different nodes are allowed to communicate with each other
   ## ref: https://github.com/bitnami/bitnami-docker-rabbitmq#environment-variables
@@ -124,7 +124,7 @@ memoryHighWatermark:
 
 ## Plugins to enable
 ##
-plugins: 'rabbitmq_management rabbitmq_peer_discovery_k8s rabbitmq_amqp1_0'
+plugins: 'rabbitmq_management rabbitmq_peer_discovery_k8s'
 
 ## Community plugins to download during container initialization.
 ## Combine it with extraPlugins to also enable them.
