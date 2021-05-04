@@ -10,7 +10,7 @@ $ RABBITMQ_DEFAULT_PASS=$(openssl rand -hex 8)
 $ kubectl create secret generic \
   --from-literal="RABBITMQ_DEFAULT_PASS=$RABBITMQ_DEFAULT_PASS" \
   --from-literal="rabbitmq-password=$RABBITMQ_DEFAULT_PASS" \
-  --from-literal="CELERY_BROKER_URL=amqp://guest:$RABBITMQ_DEFAULT_PASS@mq:5672/" \
+  --from-literal="CELERY_BROKER_URL=amqp://guest:$RABBITMQ_DEFAULT_PASS@rabbitmq:5672/" \
   mq-secrets --namespace invenio
 secret "mq-secrets" created
 ```
