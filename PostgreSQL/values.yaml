@@ -280,7 +280,7 @@ postgresqlSharedPreloadLibraries: "pgaudit"
 
 ## Maximum total connections
 ##
-postgresqlMaxConnections:
+postgresqlMaxConnections: 300
 
 ## Maximum connections for the postgres user
 ##
