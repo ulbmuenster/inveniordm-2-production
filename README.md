@@ -16,9 +16,9 @@ The deployment of InvenioRDM consists of several products:
 - ElasticSearch
 - Redis
 
-Right now the available documentations on how to setup are available for 
-[PostgreSQL](./PostgreSQL/README.md), [RabbitMQ](./RabbitMQ/README.md) and 
-[ElasticSearch](./ElasticSearch/README.md).
+The documentations on how to setup the components are available for 
+[PostgreSQL](./PostgreSQL/README.md), [RabbitMQ](./RabbitMQ/README.md), 
+[ElasticSearch](./ElasticSearch/README.md) and [Redis](./Redis/README.md).
 
 ## Build the InvenioRDM image
 
