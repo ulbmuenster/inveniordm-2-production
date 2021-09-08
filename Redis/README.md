@@ -37,5 +37,5 @@ kubectl apply -f cache-claim.yml -n invenio
 
 Finally, the deployment is done by calling
 ```shell
-helm install redis --set architecture=standalone --set master.persistence.existingClaim=cache-claim bitnami/redis
+helm install redis --set architecture=standalone --set master.persistence.existingClaim=cache-claim bitnami/redis -n invenio
 ```
