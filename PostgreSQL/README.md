@@ -51,7 +51,7 @@ spec:
     - ReadWriteOnce
   resources:
     requests:
-      storage: 5Gi
+      storage: 50Gi
 ```
 **TODO:** finalize the storage size
 
