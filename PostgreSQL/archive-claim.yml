@@ -5,9 +5,9 @@ metadata:
   annotations:
     "helm.sh/resource-policy": keep
 spec:
-  storageClassName: cindergold-delete
+  storageClassName: cinderbronze
   accessModes:
     - ReadWriteOnce
   resources:
     requests:
-      storage: 5Gi
+      storage: 50Gi
