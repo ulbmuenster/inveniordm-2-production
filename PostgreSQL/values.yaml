@@ -239,7 +239,7 @@ usePasswordFile: false
 ## @param postgresqlDatabase PostgreSQL database
 ## ref: https://github.com/bitnami/bitnami-docker-postgresql/blob/master/README.md#creating-a-database-on-first-run
 ##
-postgresqlDatabase: ""
+postgresqlDatabase: invenio
 ## @param postgresqlDataDir PostgreSQL data dir folder
 ## ref: https://github.com/bitnami/bitnami-docker-postgresql/blob/master/README.md
 ##
@@ -273,7 +273,7 @@ postgresqlConfiguration: {}
 ## Alternatively, you can put your *.conf under the files/conf.d/ directory
 ## https://github.com/bitnami/bitnami-docker-postgresql#allow-settings-to-be-loaded-from-files-other-than-the-default-postgresqlconf
 ##
-postgresqlExtendedConf: { "archiveMode": "on", "archiveTimeout": "60", "archiveCommand": "\'test ! -f /mnt/archive/%f && cp %p /mnt/archive/%f\'" }
+postgresqlExtendedConf: { "archiveMode": "on", "archiveTimeout": "60", "archiveCommand": "test ! -f /mnt/archive/%f && cp %p /mnt/archive/%f" }
 ## Configure current cluster's primary server to be the standby server in other cluster.
 ## This will allow cross cluster replication and provide cross cluster high availability.
 ## You will need to configure pgHbaConfiguration if you want to enable this feature with local cluster replication enabled.
@@ -479,7 +479,7 @@ shmVolume:
   ## e.g:
   ## sizeLimit: 1Gi
   ##
-  sizeLimit: ""
+  sizeLimit: 1Gi
 persistence:
   ## @param persistence.enabled Enable persistence using PVC
   ##
@@ -737,7 +737,7 @@ readReplicas:
   ## @param readReplicas.persistence.enabled Whether to enable PostgreSQL read replicas replicas persistence
   ##
   persistence:
-    enabled: true
+    enabled: false
   ## @param readReplicas.resources CPU/Memory resource requests/limits override for readReplicass. Will fallback to `values.resources` if not defined.
   ##
   resources: {}
@@ -749,6 +749,11 @@ resources:
   requests:
     memory: 256Mi
     cpu: 250m
+    ephemeral-storage: 2Gi
+  limits:
+    memory: 512Mi
+    cpu: 500m
+    ephemeral-storage: 2Gi
 networkPolicy:
   ## @param networkPolicy.enabled Enable creation of NetworkPolicy resources. Only Ingress traffic is filtered for now.
   ##

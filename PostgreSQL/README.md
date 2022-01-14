@@ -98,7 +98,7 @@ As replication is already activated (so streaming of the logs is active) we only
 and define an archive command that does the trick. Commits might also be rare, so by adding `archiveTimeout: 60` 
 we make sure that the transaction logs will be copied every 60 seconds. So in `values.yaml` we add:
 ```yaml
-postgresqlExtendedConf: { "archiveMode": "on", "archiveTimeout": "60", "archiveCommand": "\'test ! -f /mnt/archive/%f && cp %p /mnt/archive/%f\'" }
+postgresqlExtendedConf: { "archiveMode": "on", "archiveTimeout": "60", "archiveCommand": "test ! -f /mnt/archive/%f && cp %p /mnt/archive/%f" }
 ```
 
 Transaction logs are persisted to an extra volume defined in `archive-claim.yml`:
@@ -115,7 +115,7 @@ spec:
     - ReadWriteOnce
   resources:
     requests:
-      storage: 5Gi
+      storage: 50Gi
 ```
 
 This is created by calling
