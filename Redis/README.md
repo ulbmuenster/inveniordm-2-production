@@ -1,9 +1,9 @@
 # Installation and Configuration of Redis
 
 The PostgreSQL installation sets up on the Bitnami helm chart, available on
-`https://charts.bitnami.com/bitnami`. As there is just the PVC, we don't have 
-a `values.yaml` of our own. Instead we add the needed value directly to the 
-command line when deploying the chart.
+`https://charts.bitnami.com/bitnami`. Be careful to define the proper resource limits in 
+`values.yaml`. The target file system of the tmp-Directories lies in `Memory` as this is
+the fastest.
 
 ## Persistence
 
