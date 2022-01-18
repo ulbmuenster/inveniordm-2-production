@@ -22,10 +22,9 @@ esMajorVersion: ""
 
 # Allows you to add any config files in /usr/share/elasticsearch/config/
 # such as elasticsearch.yml and log4j2.properties
-esConfig: {}
-#  elasticsearch.yml: |
-#    key:
-#      nestedkey: value
+esConfig:
+  elasticsearch.yml: |
+    node.store.allow_mmap: false
 #  log4j2.properties: |
 #    key = value
 
@@ -58,7 +57,7 @@ hostAliases: []
 #  - "foo.local"
 #  - "bar.local"
 
-image: "docker.elastic.co/elasticsearch/elasticsearch"
+image: "elasticsearch"
 imageTag: "7.10.1"
 imagePullPolicy: "IfNotPresent"
 
@@ -74,9 +73,11 @@ resources:
   requests:
     cpu: "1000m"
     memory: "2Gi"
+    ephemeral-storage: "1Gi"
   limits:
     cpu: "1000m"
     memory: "2Gi"
+    ephemeral-storage: "1Gi"
 
 initResources: {}
   # limits:
@@ -90,6 +91,7 @@ networkHost: "0.0.0.0"
 
 volumeClaimTemplate:
   accessModes: [ "ReadWriteOnce" ]
+  storageClassName: "manilabronze"
   resources:
     requests:
       storage: 30Gi
@@ -269,7 +271,7 @@ lifecycle: {}
 #         curl -XPUT "$ES_URL/_template/$TEMPLATE_NAME" -H 'Content-Type: application/json' -d'{"index_patterns":['\""$INDEX_PATTERN"\"'],"settings":{"number_of_shards":'$SHARD_COUNT',"number_of_replicas":'$REPLICA_COUNT'}}'
 
 sysctlInitContainer:
-  enabled: true
+  enabled: false
 
 keystore: []
 
