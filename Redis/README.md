@@ -18,7 +18,7 @@ metadata:
   annotations:
     "helm.sh/resource-policy": keep
 spec:
-  storageClassName: cindergold-delete
+  storageClassName: cindergold
   accessModes:
     - ReadWriteOnce
   resources:
