@@ -35,7 +35,7 @@ Persistence is automatically enabled in the RabbitMQ helm chart. We have only to
 by adding
 ```yaml
 persistence:
-  storageClass: cindergold-delete
+  storageClass: cindergold
 ```
 in `values.yaml`.
 
