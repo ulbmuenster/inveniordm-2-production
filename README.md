@@ -54,3 +54,9 @@ docker build -t ulb.wwu.io/wwurdm/invenio:n.0.0 . --build-arg include_assets=tru
 docker push ulb.wwu.io/wwurdm/invenio:n.0.0
 ```
 
+## Deploy InvenioRDM
+
+First, creat a certificate, run
+```shell
+kubectl apply -f certificate.yml -n invenio
+```
