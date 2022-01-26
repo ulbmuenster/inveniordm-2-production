@@ -1,0 +1,23 @@
+apiVersion: cilium.io/v2
+kind: CiliumNetworkPolicy
+metadata:
+  name: web-policy
+spec:
+  endpointSelector:
+    matchLabels:
+      k8s:app: nginx
+      k8s:component: frontend
+      k8s:release: webserver
+  ingress:
+    - fromEndpoints:
+        - matchLabels:
+            k8s:app: istio-ingressgateway
+            k8s:istio: ingressgateway
+            k8s:name: istio-ingressgateway
+            io.cilium.k8s.policy.cluster: ms1
+            k8s:io.kubernetes.pod.namespace: istio-ingressgateway
+      toPorts:
+        - ports:
+            - port: "8080"
+              protocol: TCP
+  egress: []
