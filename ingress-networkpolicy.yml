@@ -5,9 +5,7 @@ metadata:
 spec:
   endpointSelector:
     matchLabels:
-      k8s:app: nginx
-      k8s:component: frontend
-      k8s:release: webserver
+      k8s:app: web
   ingress:
     - fromEndpoints:
         - matchLabels:
