@@ -540,11 +540,11 @@ containerSecurityContext: {}
 resources:
   limits:
     cpu: 1000m
-    memory: 2Gi
+    memory: 4Gi
     ephemeral-storage: 2Gi
   requests:
     cpu: 1000m
-    memory: 2Gi
+    memory: 4Gi
     ephemeral-storage: 2Gi
 
 ## Configure RabbitMQ containers' extra options for liveness probe
