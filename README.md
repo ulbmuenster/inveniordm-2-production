@@ -29,29 +29,31 @@ With `pip` installed call
 ```shell
 sudo pip install -U invenio-cli
 ```
-to upgrade to the latest available version of `invenio-cli`. Then use it to scaffold
-the new version of InvenioRDM:
+to upgrade to the latest available version of `invenio-cli`. Before using it to scaffold
+the new version of InvenioRDM make sure you are using the correct version of node/npm! Then call
 ```shell
-invenio-cli init rdm
+invenio-cli init rdm -c vx.y
 ```
-Make sure to choose the same Python version as installed in the VM (Python 3.6).
-There are some configuration files to be edited to alter behaviour and look&feel 
-of InvenioRDM. To change the maximal upload size edit the file
-`docker/nginx/conf.d/default.conf`. In the section
+Make sure to choose the correct Python version available (actually 3.9).
+The InvenioRDM instance is mainly configured in the `values.yaml` of the InvenioRDM helm chart. However, make sure 
+the main configuration file `invenio.cfg` contains the section
 ```shell
-location ~ /api/records/.+/draft/files/.+/content
+SQLALCHEMY_ENGINE_OPTIONS = {
+    'pool_pre_ping': True,
+    'max_overflow': 10,
+    'pool_size': 5,
+    'pool_recycle': 3600,
+    'pool_timeout': 30,	
+}
 ```
-change `max_client_body_size` to the size you want.
-
-Main configuration file is `invenio.cfg`.
 Next call
 ```shell
 invenio-cli install --pre
 ```
 and build the docker image with
 ```shell
-docker build -t ulb.wwu.io/wwurdm/invenio:n.0.0 . --build-arg include_assets=true
-docker push ulb.wwu.io/wwurdm/invenio:n.0.0
+docker build -t ulb.wwu.io/wwurdm/invenio:x.y.0 . --build-arg include_assets=true
+docker push ulb.wwu.io/wwurdm/invenio:x.y.0
 ```
 
 ## Deploy InvenioRDM
