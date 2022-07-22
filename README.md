@@ -50,7 +50,17 @@ Next call
 ```shell
 invenio-cli install --pre
 ```
-and build the docker image with
+
+---
+Especially important for WWU:
+- [x] produce a file names.yaml
+- [x] produce a file subjects_gnd.yaml
+- [x] produce a file subjects_ddc_german.yaml
+- [x] produce a file resource_types.yaml
+and put them into the app_data/vocabularies directory. The latest three files must be added
+to app_data/vocabularies.yaml. The names.yaml will be imported another way.
+---
+Build the docker image with
 ```shell
 docker build -t ulb.wwu.io/wwurdm/invenio:x.y.0 . --build-arg include_assets=true
 docker push ulb.wwu.io/wwurdm/invenio:x.y.0
